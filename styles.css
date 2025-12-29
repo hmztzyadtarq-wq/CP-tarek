@@ -1,0 +1,86 @@
+body {
+  margin: 0;
+  font-family: "Cairo", sans-serif;
+  background: #0b0b0f;
+  color: #f7f7f7;
+}
+
+.container {
+  max-width: 800px;
+  margin: auto;
+  padding: 20px;
+}
+
+.header {
+  text-align: center;
+  background: #13131a;
+  color: #ffcc00;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.card {
+  background: #13131a;
+  margin-top: 20px;
+  padding: 15px;
+  border-radius: 10px;
+}
+
+.phone-list {
+  list-style: none;
+  padding: 0;
+}
+
+.phone-list li {
+  display: flex;
+  justify-content: space-between;
+  background: #0f0f16;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+}
+
+.copy-btn {
+  background: #ffcc00;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.grid a {
+  background: #0f0f16;
+  color: #f7f7f7;
+  text-decoration: none;
+  padding: 10px;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.grid a:hover {
+  background: #ffcc00;
+  color: #000;
+}
+
+.footer {
+  margin-top: 20px;
+  text-align: center;
+}
+
+#toast {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #101015;
+  color: #fff;
+  padding: 10px 15px;
+  border-radius: 8px;
+}
