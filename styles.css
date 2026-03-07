@@ -147,10 +147,10 @@ nav a:hover {
 .instagram:hover { color: #ec2f6e; }
 .twitter:hover { color: #1da1f2; }
 .messenger:hover { color: #0084ff; }
-.telegram:hover { color: #0088cc; }
 .snapchat:hover { color: #fffc00; }
 .tiktok:hover { color: #69c9d0; }
 .email:hover { color: #d44638; }
+.telegram:hover { color: #0088cc; }
 .pinterest:hover { color: #bd081c; }
 
 /* Animation */
@@ -158,4 +158,6 @@ nav a:hover {
   from {opacity: 0;}
   to {opacity: 1;}
 }
+
+
 
