@@ -1,0 +1,162 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #111;
+  color: #fff;
+  overflow-x: hidden;
+}
+
+/* Header */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background: #222;
+  position: sticky;
+  top: 0;
+}
+
+header .logo {
+  display: flex;
+  align-items: center;
+  font-size: 24px;
+  font-weight: bold;
+  color: #00ffcc;
+}
+
+.logo-img {
+  width: 40px;
+  height: 40px;
+  margin-right: 10px;
+}
+
+/* Navigation */
+nav a {
+  margin: 0 10px;
+  color: #fff;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+nav a:hover {
+  color: #00ffcc;
+}
+
+/* Hero Section */
+.hero {
+  text-align: center;
+  padding: 50px;
+  animation: fadeIn 2s ease-in-out;
+  margin-top: 50px;
+}
+
+.banner-container {
+  position: relative;
+  display: inline-block;
+}
+
+.banner-img {
+  width: 800px;   /* حجم متوسط */
+  height: 300px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.profile-img {
+  width: 250px;
+  height: 250px;
+  border-radius: 50%; /* يخليها دايرة */
+  border: 4px solid #fff;
+  position: absolute;
+  bottom: -50px; /* يخليها فوق البانر */
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.hero h1 {
+  font-size: 36px;
+  margin-top: 70px; /* عشان الصورة فوق البانر */
+}
+.hero p {
+  font-size: 18px;
+  color: #ccc;
+}
+
+/* Projects Section */
+#projects {
+  padding: 50px;
+  text-align: center;
+}
+.cards {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.card {
+  background: #222;
+  margin: 15px;
+  padding: 20px;
+  border-radius: 10px;
+  width: 250px;
+  cursor: pointer;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px #00ffcc;
+}
+.card img {
+  width: 100%;
+  border-radius: 10px;
+}
+.card h3 {
+  margin-top: 10px;
+  color: #00ffcc;
+}
+
+/* Contact Section */
+#contact {
+  padding: 50px;
+  text-align: center;
+}
+
+.social-icons {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+.social-icons .icon {
+  margin: 10px;
+  font-size: 28px;
+  color: #fff;
+  transition: transform 0.3s, color 0.3s;
+}
+
+.social-icons .icon:hover {
+  transform: scale(1.3) rotate(10deg);
+}
+
+/* ألوان مخصصة لكل أيقونة */
+.facebook:hover { color: #3b5998; }
+.linkedin:hover { color: #0077b5; }
+.github:hover { color: #000000; }
+.whatsapp:hover { color: #25d366; }
+.youtube:hover { color: #ff0000; }
+.instagram:hover { color: #ec2f6e; }
+.twitter:hover { color: #1da1f2; }
+.messenger:hover { color: #0084ff; }
+.telegram:hover { color: #0088cc; }
+.snapchat:hover { color: #fffc00; }
+.tiktok:hover { color: #69c9d0; }
+.email:hover { color: #d44638; }
+.pinterest:hover { color: #bd081c; }
+
+/* Animation */
+@keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+
+
