@@ -1,44 +1,62 @@
-// نسخ الرقم
-document.querySelectorAll(".copy-btn").forEach((btn) => {
-  btn.addEventListener("click", async () => {
-    const number = btn.getAttribute("data-number");
-    try {
-      await navigator.clipboard.writeText(number);
-      showToast("تم النسخ ✅");
-    } catch {
-      showToast("تعذر النسخ");
+function openProject(url) {
+  window.open(url, "_blank");
+}
+
+// Simple animation on scroll
+window.addEventListener("scroll", () => {
+  document.querySelectorAll(".card").forEach(card => {
+    let position = card.getBoundingClientRect().top;
+    if (position < window.innerHeight - 100) {
+      card.style.opacity = 1;
+      card.style.transform = "translateY(0)";
     }
   });
 });
+// كتابة تدريجية للنص
+document.addEventListener("DOMContentLoaded", function() {
+  const text = "Hello, I'm a Web Developer";
+  const heading = document.querySelector(".hero h1");
+  let i = 0;
 
-function showToast(message) {
-  const toast = document.getElementById("toast");
-  toast.textContent = message;
-  toast.hidden = false;
-  setTimeout(() => (toast.hidden = true), 2000);
-}
-
-// تحميل vCard
-document.getElementById("downloadVCard").addEventListener("click", () => {
-  const numbers = [...document.querySelectorAll(".copy-btn")].map((btn) =>
-    btn.getAttribute("data-number")
-  );
-
-  const vcard = [
-    "BEGIN:VCARD",
-    "VERSION:3.0",
-    "FN:جهة اتصال",
-    ...numbers.map((n) => `TEL;TYPE=CELL:${n}`),
-    "END:VCARD",
-  ].join("\n");
-
-  const blob = new Blob([vcard], { type: "text/vcard" });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = "contact.vcf";
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  URL.revokeObjectURL(url);
+  function typeWriter() {
+    if (i < text.length) {
+      heading.innerHTML += text.charAt(i);
+      i++;
+      setTimeout(typeWriter, 100);
+    }
+  }
+  heading.innerHTML = "";
+  typeWriter();
 });
+function openProject(url) {
+  // حركة قبل فتح الرابط
+  const cards = document.querySelectorAll(".card");
+  cards.forEach(card => {
+    card.addEventListener("click", () => {
+      card.style.transform = "scale(0.95)";
+      setTimeout(() => {
+        window.open(url, "_blank");
+        card.style.transform = "scale(1)";
+      }, 300);
+    });
+  });
+}
+const icons = document.querySelectorAll(".social-icons .icon");
+
+icons.forEach(icon => {
+  icon.addEventListener("mouseover", () => {
+    icon.style.transform = "rotate(20deg) scale(1.2)";
+  });
+  icon.addEventListener("mouseout", () => {
+    icon.style.transform = "rotate(0deg) scale(1)";
+  });
+});
+window.onload = () => {
+  const banner = document.querySelector(".banner-img");
+  banner.style.opacity = 0;
+  setTimeout(() => {
+    banner.style.transition = "opacity 2s";
+    banner.style.opacity = 1;
+  }, 500);
+};
+
