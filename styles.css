@@ -157,10 +157,15 @@ nav a:hover {
 @keyframes fadeIn {
   from {opacity: 0;}
   to {opacity: 1;}
+
 }
-
-
-
+<!-- ربط ملف html-->
+  <link rel="stylesheet" href="index.html">
+  <!-- Font Awesome CDN -->
+  <link rel="html
+heet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+}
 
 
 
