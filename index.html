@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Tech Roots Market</title>
+<script>document.documentElement.classList.add("js")</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
@@ -35,6 +36,10 @@ header{position:fixed;top:0;left:0;right:0;z-index:50;padding:calc(14px + env(sa
   background:var(--bar);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
 .mark{position:relative;overflow:hidden}.mark img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:#fff}
 .cover .shot{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.banner{position:relative;height:clamp(180px,32vw,340px);border-radius:32px;border:1px solid var(--line);background:linear-gradient(120deg,rgba(61,245,200,.25),rgba(139,123,255,.35)),var(--bg2);margin-bottom:110px}
+.banner .bimg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:inherit}
+.avatar{position:absolute;left:50%;bottom:-80px;transform:translateX(-50%);width:clamp(120px,18vw,170px);aspect-ratio:1;border-radius:50%;border:5px solid var(--bg);background:linear-gradient(135deg,var(--mint),var(--violet));display:grid;place-items:center;font-family:var(--display);font-size:56px;font-weight:800;color:#06101a;overflow:hidden;box-shadow:0 20px 50px -15px rgba(0,0,0,.5)}
+.avatar img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .brand{display:flex;align-items:center;gap:10px;font-family:var(--display);font-weight:700;font-size:18px}
 .mark{width:28px;height:28px;border-radius:9px;background:linear-gradient(135deg,var(--mint),var(--violet));display:grid;place-items:center;color:#06101a;font-weight:800;font-size:15px}
 nav{display:flex;align-items:center;gap:6px}
@@ -109,7 +114,7 @@ section{position:relative;z-index:2}
 .socials a:hover{color:#04131a;background:var(--mint);border-color:var(--mint);transform:translateY(-3px)}
 footer{padding:36px 0 48px;text-align:center;color:#5d678a;font-size:14px;position:relative;z-index:2}
 
-.reveal{opacity:0;transform:translateY(24px);transition:opacity .8s,transform .8s}
+.js .reveal{opacity:0;transform:translateY(24px);transition:opacity .8s,transform .8s}
 .reveal.in.proj,.reveal.in.svc{transition:opacity .8s,transform .35s,border-color .35s,box-shadow .35s}
 .reveal.in.svc:hover{transform:translateY(-6px)}
 body{transition:background-color .4s,color .4s}
@@ -155,7 +160,7 @@ nav{order:2}.brand{order:1}
   nav.open{display:flex}nav a{text-align:center}.burger{display:block}
   header{position:fixed}.bar{position:relative}.toggle{margin-left:auto}
 }
-@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.js .reveal{opacity:1;transform:none}}
 </style>
 </head>
 <body>
@@ -199,6 +204,12 @@ nav{order:2}.brand{order:1}
 </div>
 
 <section class="sec" id="about">
+  <div class="wrap">
+    <div class="banner reveal">
+      <img class="bimg" src="frontend/assets/images/Screenshot%202026-05-03%20070730.png" alt="Banner" onerror="this.remove()">
+      <div class="avatar">T<img src="frontend/assets/images/profile.jpg" alt="Profile photo" onerror="this.remove()"></div>
+    </div>
+  </div>
   <div class="wrap about">
     <div class="reveal">
       <h2>Every project is a story worth telling.</h2>
@@ -289,4 +300,100 @@ nav{order:2}.brand{order:1}
 
   // menu
   var nav=document.getElementById("nav");
-  document.getElementById("burger").onclick=function(){nav.classL
+  document.getElementById("burger").onclick=function(){nav.classList.toggle("open")};
+  nav.addEventListener("click",function(e){if(e.target.tagName==="A")nav.classList.remove("open")});
+
+  // cursor glow
+  var g=document.getElementById("glow");
+  addEventListener("pointermove",function(e){g.style.left=e.clientX+"px";g.style.top=e.clientY+"px"});
+
+  // typewriter
+  var words=["clean design.","fast, responsive sites.","strong brand identity.","results that last."],t=document.getElementById("type"),wi=0,ci=0,del=false;
+  function tick(){
+    var w=words[wi];
+    t.textContent=w.slice(0,ci);
+    if(!del&&ci===w.length){del=true;return setTimeout(tick,1600)}
+    if(del&&ci===0){del=false;wi=(wi+1)%words.length}
+    ci+=del?-1:1;setTimeout(tick,del?35:70);
+  }
+  if(rm){t.textContent=words[0]}else{tick()}
+
+  // reveal + counters
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){
+    if(!e.isIntersecting)return;e.target.classList.add("in");io.unobserve(e.target);(function(t){setTimeout(function(){t.style.transitionDelay="0s"},1600)})(e.target);
+    e.target.querySelectorAll("[data-n]").forEach(count);
+  })},{threshold:.15});
+  document.querySelectorAll(".reveal").forEach(function(el){el.style.transitionDelay=([].indexOf.call(el.parentNode.children,el)*0.1)+"s";io.observe(el)});
+  function count(el){
+    var n=+el.dataset.n,s=el.dataset.s||"",st=null;
+    function f(ts){st=st||ts;var p=Math.min((ts-st)/1200,1);el.textContent=Math.round(n*(1-Math.pow(1-p,3)))+s;if(p<1)requestAnimationFrame(f)}
+    rm?el.textContent=n+s:requestAnimationFrame(f);
+  }
+
+  // card tilt
+  document.querySelectorAll(".proj").forEach(function(c){
+    if(rm)return;
+    c.addEventListener("pointermove",function(e){
+      var r=c.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;
+      c.style.transform="perspective(900px) rotateY("+x*7+"deg) rotateX("+(-y*7)+"deg) translateY(-6px)";
+    });
+    c.addEventListener("pointerleave",function(){c.style.transform=""});
+  });
+
+  // fallback reveal
+  function sweep(){document.querySelectorAll(".reveal:not(.in)").forEach(function(el){if(el.getBoundingClientRect().top<innerHeight*.95){el.classList.add("in");el.querySelectorAll("[data-n]").forEach(count)}})}
+  addEventListener("scroll",sweep,{passive:true});setTimeout(sweep,1200);
+
+  // theme toggle
+  var root=document.documentElement;
+  try{var sv=localStorage.getItem("tr-theme");if(sv)root.dataset.theme=sv}catch(e){}
+  document.getElementById("theme").onclick=function(){var n=root.dataset.theme==="light"?"dark":"light";root.dataset.theme=n;try{localStorage.setItem("tr-theme",n)}catch(e){}};
+
+  // scroll progress
+  var pg=document.getElementById("progress");
+  addEventListener("scroll",function(){var h=document.documentElement.scrollHeight-innerHeight;pg.style.transform="scaleX("+(h>0?scrollY/h:0)+")"},{passive:true});
+
+  // magnetic buttons + service spotlight
+  if(!rm)document.querySelectorAll(".btn").forEach(function(b){
+    b.addEventListener("pointermove",function(e){var r=b.getBoundingClientRect();b.style.transform="translate("+(e.clientX-r.left-r.width/2)*.25+"px,"+(e.clientY-r.top-r.height/2)*.35+"px)"});
+    b.addEventListener("pointerleave",function(){b.style.transform=""});
+  });
+  document.querySelectorAll(".svc").forEach(function(c){
+    c.addEventListener("pointermove",function(e){var r=c.getBoundingClientRect();c.style.setProperty("--mx",e.clientX-r.left+"px");c.style.setProperty("--my",e.clientY-r.top+"px")});
+  });
+
+  // root network canvas
+  var cv=document.getElementById("roots"),cx=cv.getContext("2d"),W,H,P=[],m={x:-999,y:-999};
+  function size(){
+    var d=Math.min(devicePixelRatio||1,2);W=cv.clientWidth;H=cv.clientHeight;cv.width=W*d;cv.height=H*d;cx.setTransform(d,0,0,d,0,0);
+    var n=Math.round(W*H/16000);P=[];
+    for(var i=0;i<n;i++)P.push({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.3,vy:(Math.random()-.5)*.3});
+  }
+  size();addEventListener("resize",size);
+  cv.parentNode.addEventListener("pointermove",function(e){var r=cv.getBoundingClientRect();m.x=e.clientX-r.left;m.y=e.clientY-r.top});
+  function M(){return root.dataset.theme==="light"?"0,168,132":"61,245,200"}
+  function V(){return root.dataset.theme==="light"?"106,87,255":"139,123,255"}
+  function draw(){
+    cx.clearRect(0,0,W,H);
+    for(var i=0;i<P.length;i++){
+      var a=P[i];
+      if(!rm){a.x+=a.vx;a.y+=a.vy;if(a.x<0||a.x>W)a.vx*=-1;if(a.y<0||a.y>H)a.vy*=-1}
+      var dm=Math.hypot(a.x-m.x,a.y-m.y);
+      cx.beginPath();cx.arc(a.x,a.y,dm<160?2.6:1.5,0,6.283);
+      cx.fillStyle=dm<160?"rgba("+M()+",.95)":"rgba("+V()+",.55)";cx.fill();
+      for(var j=i+1;j<P.length;j++){
+        var b=P[j],d=Math.hypot(a.x-b.x,a.y-b.y);
+        if(d<130){
+          var near=Math.hypot((a.x+b.x)/2-m.x,(a.y+b.y)/2-m.y)<180;
+          cx.strokeStyle=near?"rgba("+M()+","+(1-d/130)*.6+")":"rgba("+V()+","+(1-d/130)*.22+")";
+          cx.lineWidth=1;cx.beginPath();cx.moveTo(a.x,a.y);cx.lineTo(b.x,b.y);cx.stroke();
+        }
+      }
+    }
+    if(!rm)requestAnimationFrame(draw);
+  }
+  draw();
+})();
+</script>
+</body>
+</html>
