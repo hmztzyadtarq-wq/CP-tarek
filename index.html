@@ -33,6 +33,8 @@ header{position:fixed;top:0;left:0;right:0;z-index:50;padding:calc(14px + env(sa
 .bar{max-width:1180px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;
   padding:10px 14px 10px 20px;border:1px solid var(--line);border-radius:999px;
   background:var(--bar);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
+.mark{position:relative;overflow:hidden}.mark img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:#fff}
+.cover .shot{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .brand{display:flex;align-items:center;gap:10px;font-family:var(--display);font-weight:700;font-size:18px}
 .mark{width:28px;height:28px;border-radius:9px;background:linear-gradient(135deg,var(--mint),var(--violet));display:grid;place-items:center;color:#06101a;font-weight:800;font-size:15px}
 nav{display:flex;align-items:center;gap:6px}
@@ -162,7 +164,7 @@ nav{order:2}.brand{order:1}
 
 <header>
   <div class="bar">
-    <a class="brand" href="#top"><span class="mark">T</span>Tech Roots</a>
+    <a class="brand" href="#top"><span class="mark">T<img src="frontend/assets/images/images.png" alt="" onerror="this.remove()"></span>Tech Roots</a>
     <button class="toggle" id="theme" aria-label="Switch light or dark mode"><svg class="sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg><svg class="moon" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z"/></svg></button>
     <button class="burger" id="burger" aria-label="Open menu">&#9776;</button>
     <nav id="nav">
@@ -236,15 +238,15 @@ nav{order:2}.brand{order:1}
     </div>
     <div class="grid">
       <a class="proj reveal" href="https://hmztzyadtarq-wq.github.io/....-..../" target="_blank" rel="noopener">
-        <div class="cover c1"><i>A</i></div>
+        <div class="cover c1"><i>A</i><img class="shot" src="frontend/assets/images/images%20(1).png" alt="" loading="lazy" onerror="this.remove()"></div>
         <div class="meta"><div><h3>Abuo Rihap Group</h3><p>Company website</p></div><span class="go">&#10140;</span></div>
       </a>
       <a class="proj reveal" href="https://hmztzyadtarq-wq.github.io/Artist-A-Darsh/" target="_blank" rel="noopener">
-        <div class="cover c2"><i>S</i></div>
+        <div class="cover c2"><i>S</i><img class="shot" src="frontend/assets/images/%D8%AA%D9%86%D8%B2%D9%8A%D9%84.jfif" alt="" loading="lazy" onerror="this.remove()"></div>
         <div class="meta"><div><h3>Art Shop</h3><p>Online art store</p></div><span class="go">&#10140;</span></div>
       </a>
       <a class="proj reveal" href="https://github.com/hmztzyadtarq-wq/Artist-A-Darsh" target="_blank" rel="noopener">
-        <div class="cover c3"><i>+</i></div>
+        <div class="cover c3"><i>+</i><img class="shot" src="frontend/assets/images/%D8%AA%D9%86%D8%B2%D9%8A%D9%84.jfif" alt="" loading="lazy" onerror="this.remove()"></div>
         <div class="meta"><div><h3>Project Three</h3><p>Source code on GitHub</p></div><span class="go">&#10140;</span></div>
       </a>
     </div>
@@ -287,96 +289,4 @@ nav{order:2}.brand{order:1}
 
   // menu
   var nav=document.getElementById("nav");
-  document.getElementById("burger").onclick=function(){nav.classList.toggle("open")};
-  nav.addEventListener("click",function(e){if(e.target.tagName==="A")nav.classList.remove("open")});
-
-  // cursor glow
-  var g=document.getElementById("glow");
-  addEventListener("pointermove",function(e){g.style.left=e.clientX+"px";g.style.top=e.clientY+"px"});
-
-  // typewriter
-  var words=["clean design.","fast, responsive sites.","strong brand identity.","results that last."],t=document.getElementById("type"),wi=0,ci=0,del=false;
-  function tick(){
-    var w=words[wi];
-    t.textContent=w.slice(0,ci);
-    if(!del&&ci===w.length){del=true;return setTimeout(tick,1600)}
-    if(del&&ci===0){del=false;wi=(wi+1)%words.length}
-    ci+=del?-1:1;setTimeout(tick,del?35:70);
-  }
-  if(rm){t.textContent=words[0]}else{tick()}
-
-  // reveal + counters
-  var io=new IntersectionObserver(function(es){es.forEach(function(e){
-    if(!e.isIntersecting)return;e.target.classList.add("in");io.unobserve(e.target);(function(t){setTimeout(function(){t.style.transitionDelay="0s"},1600)})(e.target);
-    e.target.querySelectorAll("[data-n]").forEach(count);
-  })},{threshold:.15});
-  document.querySelectorAll(".reveal").forEach(function(el){el.style.transitionDelay=([].indexOf.call(el.parentNode.children,el)*0.1)+"s";io.observe(el)});
-  function count(el){
-    var n=+el.dataset.n,s=el.dataset.s||"",st=null;
-    function f(ts){st=st||ts;var p=Math.min((ts-st)/1200,1);el.textContent=Math.round(n*(1-Math.pow(1-p,3)))+s;if(p<1)requestAnimationFrame(f)}
-    rm?el.textContent=n+s:requestAnimationFrame(f);
-  }
-
-  // card tilt
-  document.querySelectorAll(".proj").forEach(function(c){
-    if(rm)return;
-    c.addEventListener("pointermove",function(e){
-      var r=c.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;
-      c.style.transform="perspective(900px) rotateY("+x*7+"deg) rotateX("+(-y*7)+"deg) translateY(-6px)";
-    });
-    c.addEventListener("pointerleave",function(){c.style.transform=""});
-  });
-
-  // theme toggle
-  var root=document.documentElement;
-  try{var sv=localStorage.getItem("tr-theme");if(sv)root.dataset.theme=sv}catch(e){}
-  document.getElementById("theme").onclick=function(){var n=root.dataset.theme==="light"?"dark":"light";root.dataset.theme=n;try{localStorage.setItem("tr-theme",n)}catch(e){}};
-
-  // scroll progress
-  var pg=document.getElementById("progress");
-  addEventListener("scroll",function(){var h=document.documentElement.scrollHeight-innerHeight;pg.style.transform="scaleX("+(h>0?scrollY/h:0)+")"},{passive:true});
-
-  // magnetic buttons + service spotlight
-  if(!rm)document.querySelectorAll(".btn").forEach(function(b){
-    b.addEventListener("pointermove",function(e){var r=b.getBoundingClientRect();b.style.transform="translate("+(e.clientX-r.left-r.width/2)*.25+"px,"+(e.clientY-r.top-r.height/2)*.35+"px)"});
-    b.addEventListener("pointerleave",function(){b.style.transform=""});
-  });
-  document.querySelectorAll(".svc").forEach(function(c){
-    c.addEventListener("pointermove",function(e){var r=c.getBoundingClientRect();c.style.setProperty("--mx",e.clientX-r.left+"px");c.style.setProperty("--my",e.clientY-r.top+"px")});
-  });
-
-  // root network canvas
-  var cv=document.getElementById("roots"),cx=cv.getContext("2d"),W,H,P=[],m={x:-999,y:-999};
-  function size(){
-    var d=Math.min(devicePixelRatio||1,2);W=cv.clientWidth;H=cv.clientHeight;cv.width=W*d;cv.height=H*d;cx.setTransform(d,0,0,d,0,0);
-    var n=Math.round(W*H/16000);P=[];
-    for(var i=0;i<n;i++)P.push({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.3,vy:(Math.random()-.5)*.3});
-  }
-  size();addEventListener("resize",size);
-  cv.parentNode.addEventListener("pointermove",function(e){var r=cv.getBoundingClientRect();m.x=e.clientX-r.left;m.y=e.clientY-r.top});
-  function M(){return root.dataset.theme==="light"?"0,168,132":"61,245,200"}
-  function V(){return root.dataset.theme==="light"?"106,87,255":"139,123,255"}
-  function draw(){
-    cx.clearRect(0,0,W,H);
-    for(var i=0;i<P.length;i++){
-      var a=P[i];
-      if(!rm){a.x+=a.vx;a.y+=a.vy;if(a.x<0||a.x>W)a.vx*=-1;if(a.y<0||a.y>H)a.vy*=-1}
-      var dm=Math.hypot(a.x-m.x,a.y-m.y);
-      cx.beginPath();cx.arc(a.x,a.y,dm<160?2.6:1.5,0,6.283);
-      cx.fillStyle=dm<160?"rgba("+M()+",.95)":"rgba("+V()+",.55)";cx.fill();
-      for(var j=i+1;j<P.length;j++){
-        var b=P[j],d=Math.hypot(a.x-b.x,a.y-b.y);
-        if(d<130){
-          var near=Math.hypot((a.x+b.x)/2-m.x,(a.y+b.y)/2-m.y)<180;
-          cx.strokeStyle=near?"rgba("+M()+","+(1-d/130)*.6+")":"rgba("+V()+","+(1-d/130)*.22+")";
-          cx.lineWidth=1;cx.beginPath();cx.moveTo(a.x,a.y);cx.lineTo(b.x,b.y);cx.stroke();
-        }
-      }
-    }
-    if(!rm)requestAnimationFrame(draw);
-  }
-  draw();
-})();
-</script>
-</body>
-</html>
+  document.getElementById("burger").onclick=function(){nav.classL
